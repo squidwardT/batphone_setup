@@ -1,0 +1,32 @@
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<body>
+    <div class='header'>
+         <h1 class='title'>BAT-PHONE SETUP</h1>
+    </div>
+    <div>
+        <form class='setup_form'>
+            <table>
+                <tr><td><h2 class='subtitle'>Device Settings</h2></td></tr>
+                <tr><td><label>Name:</label></td>
+                    <td><input type=text size=18 name='name'></td></tr>
+                <tr><td><label>Longitude:</label></td>
+                    <td><input type=text size=18 name='longitude'></td></tr>
+                <tr><td><label>Latitude:</label></td>
+                    <td><input type=text size=18 name='latitude'></td></tr>
+                <tr><td><label>Description:</label></td>
+                    <td><textarea cols=30 rows=3 name='description'></textarea></td></tr>
+                <tr><td><label>Notes:</label></td>
+                    <td><textarea cols=30 rows=3 name='notes'></textarea></td></tr>
+                <tr><td><h2 class='subtitle'>Network Settings</h2></td></tr>
+                <tr><td><label>Network Name:</label></td>
+                    <td><input type=text size=18 name='ssid'></td></tr>
+                <tr><td><label>Public Key:</label></td>
+                    <td><input type=text size=18 name='publickey'></td></tr>
+                <tr><td><label>MAC Address:</label></td>
+                    <td><input type=text size=18 name='mac'></td></tr>
+            </table>
+            <div class='submit_button'>
+                <input type=submit value='Setup'>
+            </div>
+   </div>
+</body>
