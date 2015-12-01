@@ -1,4 +1,4 @@
-def post_resource_to_server(rsc_path, payload, session = None, auth = None, cookie = None):
+def post_resource_to_server(rsc_path, payload, session = None, auth = None, cookie = None, server = 'batphone.co:3000'):
     '''POST something to the server.
 
     ARGS:
@@ -19,7 +19,7 @@ def post_resource_to_server(rsc_path, payload, session = None, auth = None, cook
     # This is the path to the root of the application plus the action to be
     # performed. For example to create a new user rsc_path can be set to
     # 'users'.
-    abs_path = 'http://batphone.co:3000/' + rsc_path
+    abs_path = 'http://' + server + '/' + rsc_path
     print 'Posting to ' + abs_path
 
     # GET an authenticity token
