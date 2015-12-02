@@ -31,14 +31,14 @@ stormpath_manager = StormpathManager(app)
 def show_index():
 	return render_template('index.html')
 
-@app.route('/setup')
+@app.route('/setup', methods=['POST'])
 def setup():
 	import sys
 	sys.path.append('..')
-	from join_wifi import *
-	from application_management import *
-	from join_batman_network import *
-	from post_network_device import *
+	import application_management
+	from join_wifi import join_wifi
+	from join_batman_network import join_batman_network
+	from post_network_device import post_network_device
 	
 	dev_name = request.form['name']
 	longitude = request.form['longitude']
@@ -47,19 +47,16 @@ def setup():
 	notes = request.form['notes']
 	ssid = request.form['ssid']
 	mac = request.form['mac']
-	wifi_ssid = request.form['wifi_ssid']
-	wifi_password = request.form['password']
 		
-	join_wifi(ssid = wifi_ssid, password = wifi_password)
-	data = database_clone()
 	join_batman_network(interface = 'wlan0', network_name = ssid, ap_mac = mac)
+	data = application_management.database_clone.database_clone()
 	post_network_device(ssid = ssid, publickey = 'pgp', dev_name = dev_name,
 			    IP_address = '0.0.0.0', MAC = mac, Gateway_mode = 'client', 
 			    description = description, longitude = longitude, latitude = latitude,
 			    notes = notes)
-	host_web_app()
-	populate_db(data)
-	manage_db()
+	application_management.host_web_app.host_web_app()
+	application_management.populate_db.populate_db(data)
+	application_management.manage_db.manage_db()
 	return 'OK'
 	 
 

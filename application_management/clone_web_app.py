@@ -7,7 +7,3 @@ def clone_web_app():
 	run_command('git clone https://github.com/elevati0n/batphoneWebApp.git')
 	run_command('cd batphoneWebApp; sudo bundle install')
 
-	session, response = post_resource_to_server()
-
-	rails_home = find_rails_home()
-	run_command('cat dump.sql | sqlite ' + rails_home + '/db/development.sqlite3')
