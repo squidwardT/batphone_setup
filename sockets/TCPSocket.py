@@ -81,13 +81,15 @@ class TCPSocket(object):
 		chunks = []
 		total_recieved = 0
 		while total_recieved < 2048:
+			if "".join(chunks).find('/n') != -1:
+				break
 			chunk = self.sock.recv(min(2048 - total_recieved, 2048))
-			if chunk == '':
+			if chunk == '' or chunk is None:
 				break
 				raise RuntimeError('Connection Broken')
 			chunks.append(chunk)
 			total_recieved = total_recieved + len(chunk)
-		return ''.join(chunks)	
+		return ''.join(chunks)[:-2]	
 
 	def close(self):
 		self.sock.close()

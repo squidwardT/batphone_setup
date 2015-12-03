@@ -38,6 +38,7 @@ class TCPServerSocket(TCPSocket):
         # Bind this socket to port and listen for connections
         self.sock.bind((self.address, self.port))
         self.sock.listen(5)
+	print 'Device at ' + str(self.address) + ':' + str(self.port)
 
         # While the application is running attempt listen for connections and read the
         # connecting devices message.
@@ -45,11 +46,11 @@ class TCPServerSocket(TCPSocket):
             # Get the connected socket and make a Batman Socket out of it
             client, address = self.sock.accept()
             tcp_client = TCPSocket(address, client)
-
+ 
             # Start threads to add devices to the list of clients and read
             # their messages
             read_thread = Thread(
-                target=self.read_client, args=[tcp_client, interpreter])
+                target=self.read_client, args=[tcp_client])
             read_thread.start()
 
     def read_client(self, clients):
@@ -63,16 +64,17 @@ class TCPServerSocket(TCPSocket):
         @args 			-- A list of arguments to be interpreted
         '''
 	import shlex
+	from find_open_ip import find_open_ip
+	print 'Reading....'
         msg = clients.read()
+	
+	print msg
 	args = shlex.split(msg)
 
-        if args[0] == 'DHCP':
-		# NEED TO WRITE
-		ip = find_open_ip(args[1])
-		clients.sendall(ip)
-	else:
-		print 'Invalid Request ' + msg
+	ip = find_open_ip(args[1])
+	clients.write(ip)
+
 
 if __name__ == '__main__':
-    server = TCPServerSocket('whatever')
+    server = TCPServerSocket('192.168.2.15', 5000)
     server.start_server()

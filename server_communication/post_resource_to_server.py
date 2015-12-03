@@ -12,7 +12,7 @@ def post_resource_to_server(rsc_path, payload, session = None, auth = None, cook
     '''
     import json
     import requests
-    from BeautifulSoup import BeautifulSoup
+    from bs4 import BeautifulSoup
     from get_auth_token import get_auth_token
 
     # Build the path to the resource.

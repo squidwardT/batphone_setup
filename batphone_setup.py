@@ -35,10 +35,10 @@ def show_index():
 def setup():
 	import sys
 	sys.path.append('..')
-	import application_management
+	from application_management import database_clone
 	import threading
 	from sockets import TCPServerSocket
-	from join_wifi import join_wifi
+	from read_ip_address import read_ip_address
 	from join_batman_network import join_batman_network
 	from post_network_device import post_network_device
 	
@@ -55,13 +55,14 @@ def setup():
 	join_batman_network(interface = 'wlan0', network_name = ssid, ap_mac = mac)
 
 	# Creates a thread to manage new network devices and 
-        # dish out open IP addresses.           
-        socket = TCPSocketServer.TCPSocketServer('192.168.2.4')
+        # dish out open IP addresses.
+	ip = read_ip_address('bat0')
+        socket = TCPServerSocket.TCPServerSocket(ip, 3000)
         dhcp_thread = threading.Thread(target = socket.start_server)
         dhcp_thread.start()
 	
 	# Get the data from the server
-	data = application_management.database_clone.database_clone()
+	data = database_clone.database_clone()
 	
 	# Add the device's information to the database
 	post_network_device(ssid = ssid, publickey = 'pgp', dev_name = dev_name,

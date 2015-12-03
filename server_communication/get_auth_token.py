@@ -7,6 +7,6 @@ def get_auth_token(session):
 	RETURNS:
 	STRING @auth 	-- The auth token for the users session.
 	'''
-	from BeautifulSoup import BeautifulSoup
+	from bs4 import BeautifulSoup
 	html = BeautifulSoup(session.get('http://batphone.co:3000/login').text)
 	return html.head.find('meta', attrs={'name': 'csrf-token'})['content']
