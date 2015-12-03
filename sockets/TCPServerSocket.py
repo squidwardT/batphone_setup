@@ -72,7 +72,7 @@ class TCPServerSocket(TCPSocket):
 	args = shlex.split(msg)
 
 	ip = find_open_ip(args[1])
-	clients.write(ip)
+	clients.write(ip + '/n')
 
 
 if __name__ == '__main__':
